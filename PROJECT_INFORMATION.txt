@@ -28,10 +28,10 @@ Frontend:
 - HTML5, CSS3, JavaScript (ES6+)
 - Responsive web design with CSS Grid and Flexbox
 - Dark/light theme switching
-- Chart.js for data visualization
+- Skills and experience visualization
 
 Backend:
-- Node.js HTTP server for AI service endpoints
+- Node.js native HTTP server for AI service endpoints
 - CORS-enabled REST API for AI functionality
 - Environment variable configuration with dotenv
 
