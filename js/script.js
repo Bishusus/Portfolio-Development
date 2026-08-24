@@ -1,5 +1,20 @@
 /* ========================================================================== 
-   1. PORTFOLIO DATA MODEL & PAGE VIEWS REGISTRY
+   1. UTILITY FUNCTIONS
+   ========================================================================== */
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+/* ========================================================================== 
+   2. PORTFOLIO DATA MODEL & PAGE VIEWS REGISTRY
    ========================================================================== */
 const Portfolio = {
   identity: {
@@ -20,7 +35,7 @@ const Portfolio = {
       language: "Office Management",
       tags: ["Office Operations", "Client Support", "Performance"],
       email: "jennyhopkinszey@gmail.com",
-      image: "../portfolio.jpg",
+      image: "../portfolio.webp",
       featured: true,
       summary:
         "Office Manager with 8+ years of experience looking to take on new challenges. Skilled in office operations, supplier relationships, contract management, client support, and performance improvement.",
@@ -233,7 +248,7 @@ const PortfolioTemplates = [
     role: "Flight Attendant",
     industry: "Aviation & hospitality",
     name: "Kian Graham",
-    image: "../images/bald-man.jpg",
+    image: "../images/bald-man.webp",
     headline:
       "Delivering exceptional service with calm, confident communication.",
     accent: "#38bdf8",
@@ -245,7 +260,7 @@ const PortfolioTemplates = [
     role: "Legal Assistant",
     industry: "Legal services",
     name: "Leeanna Vega",
-    image: "../images/Legal-Assistant-CV-Example.jpg",
+    image: "../images/Legal-Assistant-CV-Example.webp",
     headline: "Organising detail-heavy legal work with clarity and precision.",
     accent: "#5eead4",
     skills: ["Scheduling", "Document preparation", "Legal ethics"],
@@ -256,7 +271,7 @@ const PortfolioTemplates = [
     role: "Office Manager",
     industry: "Business operations",
     name: "Jennifer Hopkins",
-    image: "../images/portfolio.jpg",
+    image: "../images/portfolio.webp",
     headline: "Bringing structure, calm, and efficiency to busy teams.",
     accent: "#fbbf24",
     skills: ["Office operations", "Client support", "Performance"],
@@ -899,7 +914,7 @@ function initBuilderPage(templateId = "", portfolio = null) {
     });
   }
   fields.forEach((field) =>
-    form.elements[field].addEventListener("input", updatePreview),
+    form.elements[field].addEventListener("input", debounce(updatePreview, 300)),
   );
   document
     .getElementById("github-import-btn")

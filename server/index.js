@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const zlib = require("zlib");
 
 // Load .env file manually if present
 const envPath = path.join(__dirname, "..", ".env");
@@ -29,6 +30,11 @@ const server = http.createServer(async (req, res) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
+  // Caching headers for static assets
+  if (req.url.match(/\.(css|js|jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+  }
+
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
@@ -37,8 +43,18 @@ const server = http.createServer(async (req, res) => {
 
   // Health check endpoint
   if (req.method === "GET" && req.url === "/api/health") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ status: "ok", service: "DevEngine AI Project Assistant" }));
+    const data = JSON.stringify({ status: "ok", service: "DevEngine AI Project Assistant" });
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Encoding", "gzip");
+    zlib.gzip(data, (err, compressed) => {
+      if (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: "Compression error" }));
+        return;
+      }
+      res.writeHead(200);
+      res.end(compressed);
+    });
     return;
   }
 
@@ -71,8 +87,18 @@ const server = http.createServer(async (req, res) => {
 
         const aiResult = await generateProjectDescription(projectInfo);
 
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ success: true, data: aiResult }));
+        const responseData = JSON.stringify({ success: true, data: aiResult });
+        res.setHeader("Content-Type", "application/json");
+        res.setHeader("Content-Encoding", "gzip");
+        zlib.gzip(responseData, (err, compressed) => {
+          if (err) {
+            res.writeHead(500, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ success: false, error: "Compression error" }));
+            return;
+          }
+          res.writeHead(200);
+          res.end(compressed);
+        });
       } catch (err) {
         console.error("Error handling /api/ai/improve-description:", err);
         res.writeHead(500, { "Content-Type": "application/json" });
