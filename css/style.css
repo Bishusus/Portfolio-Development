@@ -93,19 +93,21 @@ body {
 /* Background Ambient Lighting Blobs */
 .glow-blob {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   border-radius: 50%;
-  filter: blur(140px);
+  filter: blur(80px);
   pointer-events: none;
   z-index: -1;
-  opacity: 0.5;
+  opacity: 0.4;
+  will-change: transform;
+  contain: layout paint;
 }
 
 .glow-top-left {
   top: -100px;
   left: -100px;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.4), transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.3), transparent 60%);
 }
 
 .glow-bottom-right {
@@ -113,8 +115,8 @@ body {
   right: -100px;
   background: radial-gradient(
     circle,
-    rgba(192, 132, 252, 0.35),
-    transparent 70%
+    rgba(192, 132, 252, 0.25),
+    transparent 60%
   );
 }
 
@@ -147,6 +149,8 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
+  contain: layout style;
+  will-change: transform;
 }
 
 .nav-container {
@@ -357,7 +361,6 @@ body {
   background: var(--bg-surface);
   color: var(--text-primary);
   border: 1px solid var(--border-glass);
-  backdrop-filter: var(--glass-backdrop);
 }
 
 .btn-glass:hover {
@@ -496,15 +499,18 @@ body {
   background: var(--gradient-card);
   border: 1px solid var(--border-glass);
   backdrop-filter: var(--glass-backdrop);
+  -webkit-backdrop-filter: var(--glass-backdrop);
   padding: 2.5rem;
   border-radius: 20px;
-  transition: all var(--transition-speed);
+  transition: transform var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+  contain: layout style paint;
 }
 
 .glass-card:hover {
   border-color: var(--border-glass-hover);
   transform: translateY(-5px);
   box-shadow: var(--shadow-glow);
+  will-change: transform;
 }
 
 .card-icon {
@@ -527,7 +533,7 @@ body {
 .about-banner {
   background: var(--gradient-card);
   border: 1px solid var(--border-glass);
-  backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: blur(4px);
   padding: 4rem;
   border-radius: 24px;
   margin-bottom: 4rem;
@@ -539,6 +545,8 @@ body {
   margin-right: auto;
   max-width: 1240px;
   width: 100%;
+  contain: layout style paint;
+  will-change: transform, opacity;
 }
 
 .page-section > .badge-glow {
@@ -743,6 +751,8 @@ body {
   min-height: 360px;
   position: sticky;
   top: 7rem;
+  contain: layout style paint;
+  will-change: transform;
 }
 
 .builder-preview h3 {
@@ -1795,6 +1805,12 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+ }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }
 
@@ -1803,7 +1819,7 @@ body {
    ========================================================================== */
 .site-footer {
   background-color: var(--bg-secondary);
-  backdrop-filter: var(--glass-backdrop);
+  backdrop-filter: blur(4px);
   border-top: 1px solid var(--border-glass);
   padding: 4rem 0 2rem 0;
   margin-top: auto;
@@ -2374,13 +2390,14 @@ body {
   transition: all var(--transition-speed);
 }
 
-/* Typewriter Cursor Animation */
+/* Typewriter Cursor Animation - Optimized */
 .typewriter-cursor {
   display: inline-block;
   color: var(--accent-cyan);
   font-weight: 300;
   margin-left: 3px;
   animation: blinkCursor 0.85s infinite;
+  will-change: opacity;
 }
 
 @keyframes blinkCursor {

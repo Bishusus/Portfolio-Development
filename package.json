@@ -5,9 +5,14 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node server/index.js"
+    "dev": "node server/index.js",
+    "build:css": "cssnano css/style.css css/style.min.css --discardComments",
+    "build": "npm run build:css"
   },
   "dependencies": {
     "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "cssnano-cli": "^1.0.5"
   }
 }

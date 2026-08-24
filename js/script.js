@@ -13,6 +13,30 @@ function debounce(func, wait) {
   };
 }
 
+
+// Intersection Observer for lazy loading images
+const imageObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        observer.unobserve(img);
+      }
+    }
+  });
+}, {
+  rootMargin: '50px 0px',
+  threshold: 0.01
+});
+
+function observeLazyImages() {
+  document.querySelectorAll('img[data-src]').forEach(img => {
+    imageObserver.observe(img);
+  });
+}
+
 /* ========================================================================== 
    2. PORTFOLIO DATA MODEL & PAGE VIEWS REGISTRY
    ========================================================================== */
@@ -291,7 +315,7 @@ function renderTemplateCards(filter = "all") {
       (template) => `
     <article class="template-card glass-card" style="--template-accent: ${template.accent}">
       <div class="template-card-preview">
-        <img src="${escapeHtml(template.image)}" alt="${escapeHtml(template.role)} CV template example" class="template-card-image" />
+        <img src="${escapeHtml(template.image)}" alt="${escapeHtml(template.role)} CV template example" class="template-card-image" loading="lazy" width="300" height="200" />
         <span class="template-window-dot"></span><span class="template-window-dot"></span><span class="template-window-dot"></span>
         <div class="template-preview-mark">${escapeHtml(
           template.name
@@ -438,7 +462,7 @@ function renderPortfolioDetail(person) {
     <section class="portfolio-detail page-section">
       <a class="portfolio-back" href="#projects">← Back to portfolios</a>
       <div class="portfolio-detail-header">
-        ${person.image ? `<img src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)} resume" class="portfolio-detail-image">` : ""}
+        ${person.image ? `<img src="${escapeHtml(person.image)}" alt="${escapeHtml(person.name)} resume" class="portfolio-detail-image" loading="lazy" width="250" height="250">` : ""}
         <div>
           <span class="badge-glow">Complete Portfolio</span>
           <h2 class="section-title">${escapeHtml(person.name)}</h2>
@@ -580,6 +604,9 @@ async function handleRouting() {
 
   updateActiveNavLink(pageRoute);
   closeMobileMenu();
+  
+  // Initialize lazy loading for new images
+  observeLazyImages();
 
   if (pageRoute === "home") {
     initHomePage();
@@ -795,35 +822,44 @@ function initHomePage() {
     });
   });
 
-  // 4. Hero Title Typewriter Repeating Effect
+  // 4. Hero Title Typewriter Repeating Effect - Optimized with requestAnimationFrame
   const typewriterEl = document.getElementById("hero-typewriter");
   if (typewriterEl) {
     const phrase = "High-Quality Portfolios";
     let charIndex = 0;
     let isDeleting = false;
+    let lastTime = 0;
+    let typeSpeed = 90;
 
-    function typeLoop() {
-      if (isDeleting) {
-        charIndex--;
-        typewriterEl.textContent = phrase.substring(0, charIndex);
-      } else {
-        charIndex++;
-        typewriterEl.textContent = phrase.substring(0, charIndex);
+    function typeLoop(timestamp) {
+      if (!lastTime) lastTime = timestamp;
+      const elapsed = timestamp - lastTime;
+
+      if (elapsed >= typeSpeed) {
+        lastTime = timestamp;
+
+        if (isDeleting) {
+          charIndex--;
+          typewriterEl.textContent = phrase.substring(0, charIndex);
+        } else {
+          charIndex++;
+          typewriterEl.textContent = phrase.substring(0, charIndex);
+        }
+
+        typeSpeed = isDeleting ? 100 : 90;
+
+        if (!isDeleting && charIndex === phrase.length) {
+          typeSpeed = 3200;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          typeSpeed = 600;
+        }
       }
 
-      let typeSpeed = isDeleting ? 100 : 90;
-
-      if (!isDeleting && charIndex === phrase.length) {
-        typeSpeed = 3200; // Comfortable 3.2s pause on completion
-        isDeleting = true;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        typeSpeed = 600; // Pause before restarting typing loop
-      }
-
-      setTimeout(typeLoop, typeSpeed);
+      requestAnimationFrame(typeLoop);
     }
-    typeLoop();
+    requestAnimationFrame(typeLoop);
   }
 }
 
@@ -880,9 +916,12 @@ function initBuilderPage(templateId = "", portfolio = null) {
       .split(",")
       .map((skill) => skill.trim())
       .filter(Boolean);
-    preview.innerHTML = renderFormattedPortfolio(template, {
-      ...values,
-      skills: skills.join(", "),
+    
+    requestAnimationFrame(() => {
+      preview.innerHTML = renderFormattedPortfolio(template, {
+        ...values,
+        skills: skills.join(", "),
+      });
     });
   };
 
