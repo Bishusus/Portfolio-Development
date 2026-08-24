@@ -1,0 +1,167 @@
+<section class="page-section">
+  <span class="badge-glow">Portfolio builder</span>
+  <h2 class="section-title">Make it unmistakably yours.</h2>
+  <p class="section-subtitle">
+    Choose a starting point, shape your story, and publish a complete portfolio.
+  </p>
+  <div class="builder-layout">
+    <form id="builder-form" class="glass-card site-form builder-form">
+      <label for="builder-template">Starting template</label>
+      <select id="builder-template" name="template" required></select>
+
+      <label for="builder-name">Your name</label>
+      <input id="builder-name" name="name" type="text" required />
+
+      <label for="builder-role">Professional title</label>
+      <input id="builder-role" name="role" type="text" required />
+
+      <label for="builder-location">Location</label>
+      <input id="builder-location" name="location" type="text" required />
+
+      <label for="builder-email">Email address</label>
+      <input id="builder-email" name="email" type="email" required />
+
+      <label for="builder-phone">Phone number</label>
+      <input id="builder-phone" name="phone" type="tel" required />
+
+      <label for="builder-linkedin">LinkedIn or professional profile</label>
+      <input id="builder-linkedin" name="linkedin" type="url" />
+
+      <label for="builder-website">Portfolio website</label>
+      <input id="builder-website" name="website" type="url" />
+
+      <label for="builder-github">GitHub profile</label>
+      <div class="github-import-row">
+        <input
+          id="builder-github"
+          name="github"
+          type="text"
+          placeholder="github.com/username"
+        />
+        <button id="github-import-btn" class="btn btn-glass" type="button">
+          Import GitHub
+        </button>
+      </div>
+      <button
+        id="github-load-more"
+        class="btn btn-glass builder-secondary-action"
+        type="button"
+        hidden
+      >
+        <svg
+          class="btn-icon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M21.5 2v6h-6M2.5 22v-6h6"/>
+          <path d="M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+        </svg>
+        <span>Load more GitHub projects</span>
+      </button>
+
+      <!-- GitHub Projects AI Review & Description Enhancer Section -->
+      <div id="github-ai-review-section" class="github-ai-review-section glass-card" hidden>
+        <div class="ai-review-header">
+          <span class="badge-glow">✨ AI CV Description Assistant</span>
+          <h4>Refine Your Project Descriptions</h4>
+          <p class="form-note">
+            Your GitHub projects have been imported. Improve their descriptions to make them stronger for your CV.
+          </p>
+        </div>
+        <div id="github-imported-projects-list" class="github-imported-projects-list"></div>
+      </div>
+
+      <label for="builder-headline">Professional summary</label>
+      <textarea
+        id="builder-headline"
+        name="headline"
+        rows="5"
+        required
+      ></textarea>
+
+      <label for="builder-skills">Core skills</label>
+      <input
+        id="builder-skills"
+        name="skills"
+        type="text"
+        placeholder="Communication, Planning, Leadership"
+        required
+      />
+
+      <label for="builder-experience">Work experience</label>
+      <textarea
+        id="builder-experience"
+        name="experience"
+        rows="5"
+        placeholder="Office Manager | Semparare Accounting | 2017-present | Managed office operations"
+        required
+      ></textarea>
+
+      <label for="builder-education">Education</label>
+      <textarea
+        id="builder-education"
+        name="education"
+        rows="3"
+        placeholder="Business Administration | University name | 2020"
+        required
+      ></textarea>
+
+      <label for="builder-certifications">Certifications</label>
+      <textarea
+        id="builder-certifications"
+        name="certifications"
+        rows="3"
+        placeholder="First Aid Certification | Issuing organisation | 2024"
+      ></textarea>
+
+      <label for="builder-languages">Languages</label>
+      <input
+        id="builder-languages"
+        name="languages"
+        type="text"
+        placeholder="English - Native, French - Intermediate"
+        required
+      />
+
+      <div class="builder-actions">
+        <button class="btn btn-glass" type="submit" data-builder-action="draft">
+          Save draft
+        </button>
+        <button
+          class="btn btn-gradient-primary"
+          type="submit"
+          data-builder-action="publish"
+        >
+          Publish portfolio
+        </button>
+      </div>
+      <p
+        id="builder-status"
+        class="form-note"
+        role="status"
+        aria-live="polite"
+      ></p>
+    </form>
+
+    <aside class="builder-preview glass-card" aria-live="polite">
+      <div class="preview-header">
+        <span class="badge-glow">Live preview</span>
+        <div class="device-switcher" role="group" aria-label="Device viewport switcher">
+          <button class="device-btn active" type="button" data-device="desktop" title="Desktop view">
+            💻 <span>Desktop</span>
+          </button>
+          <button class="device-btn" type="button" data-device="mobile" title="Mobile view">
+            📱 <span>Mobile</span>
+          </button>
+        </div>
+      </div>
+      <div id="builder-preview-content"></div>
+    </aside>
+  </div>
+</section>

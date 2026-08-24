@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Next-Gen AI Portfolio Builder Platform for Developers."
+    />
+    <title>DevEngine — Modern AI Developer Portfolios</title>
+
+    <!-- Anti-FOUT Theme Switcher Script -->
+    <script>
+      (function () {
+        const savedTheme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.setAttribute("data-theme", savedTheme);
+      })();
+    </script>
+
+    <link rel="stylesheet" href="../css/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+      defer
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"
+      defer
+    ></script>
+    <script src="../js/supabase-config.js" defer></script>
+    <script src="../js/script.js" defer></script>
+
+    <!-- JSON-LD Structured Data Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "DevEngine",
+        "url": "https://yourportfolio.github.io",
+        "logo": "https://yourportfolio.github.io/logo.png",
+        "sameAs": [
+          "https://github.com/yourusername",
+          "https://twitter.com/yourusername",
+          "https://linkedin.com/in/yourusername"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Ambient Background Glow Effects -->
+    <div class="glow-blob glow-top-left" aria-hidden="true"></div>
+    <div class="glow-blob glow-bottom-right" aria-hidden="true"></div>
+
+    <!-- Keyboard Accessibility Skip Link -->
+    <a href="#app" class="skip-link">Skip to main content</a>
+
+    <div id="site-header"></div>
+
+    <!-- Dynamic Application Render Viewport -->
+    <main id="app" class="app-viewport" role="main" aria-live="polite"></main>
+
+    <div id="site-footer"></div>
+
+    <div
+      id="contact-result"
+      class="contact-result"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-result-title"
+      hidden
+    >
+      <div class="contact-result-backdrop" data-close-contact-result></div>
+      <div class="contact-result-panel">
+        <span id="contact-result-badge" class="badge-glow">Message status</span>
+        <h2 id="contact-result-title">Message sent</h2>
+        <p id="contact-result-message"></p>
+        <button
+          class="btn btn-gradient-primary"
+          type="button"
+          data-close-contact-result
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="logout-confirmation"
+      class="logout-confirmation"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="logout-confirmation-title"
+      hidden
+    >
+      <div class="logout-confirmation-backdrop" data-close-logout></div>
+      <div class="logout-confirmation-panel">
+        <span class="badge-glow">Account session</span>
+        <h2 id="logout-confirmation-title">Log out of DevEngine?</h2>
+        <p>Your saved portfolios will remain securely stored.</p>
+        <div class="logout-confirmation-actions">
+          <button class="btn btn-glass" type="button" data-close-logout>
+            Cancel
+          </button>
+          <button
+            id="confirm-logout-btn"
+            class="btn btn-gradient-primary"
+            type="button"
+          >
+            Log out
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

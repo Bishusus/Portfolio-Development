@@ -1,0 +1,43 @@
+<section class="page-section">
+  <span class="badge-glow">Member access</span>
+  <h2 class="section-title">Log in to DevEngine</h2>
+  <p class="section-subtitle">
+    Access your saved portfolio drafts, templates, and builder workspace.
+  </p>
+  <div class="glass-card form-card">
+    <form id="auth-form" class="site-form" action="#login" method="post">
+      <input id="auth-mode" name="mode" type="hidden" value="login" />
+      <label for="login-email">Email address</label>
+      <input
+        id="login-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+      />
+      <label for="login-password">Password</label>
+      <input
+        id="login-password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        required
+      />
+      <button id="auth-submit" class="btn btn-gradient-primary" type="submit">
+        Log in
+      </button>
+      <button id="auth-toggle" class="btn btn-glass" type="button">
+        Create an account
+      </button>
+      <p
+        id="auth-status"
+        class="form-note"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <p class="form-note">
+        Accounts and sessions are handled securely by Supabase Auth.
+      </p>
+    </form>
+  </div>
+</section>

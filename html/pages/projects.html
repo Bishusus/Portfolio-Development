@@ -1,0 +1,66 @@
+<section class="page-section">
+  <span class="badge-glow">Live template gallery</span>
+  <h2 class="section-title">Start with a portfolio that feels like you.</h2>
+  <p class="section-subtitle">
+    Explore polished, role-specific starting points. Every preview is powered by
+    sanitized sample content, so you can see the experience without seeing
+    anyone's real information.
+  </p>
+  <div class="project-filters" role="group" aria-label="Filter projects">
+    <button
+      class="filter-btn active"
+      type="button"
+      data-filter="all"
+      aria-pressed="true"
+    >
+      All work
+    </button>
+    <button
+      class="filter-btn"
+      type="button"
+      data-filter="Flight Attendant"
+      aria-pressed="false"
+    >
+      Flight Attendant
+    </button>
+    <button
+      class="filter-btn"
+      type="button"
+      data-filter="Legal Assistant"
+      aria-pressed="false"
+    >
+      Legal Assistant
+    </button>
+    <button
+      class="filter-btn"
+      type="button"
+      data-filter="Office Manager"
+      aria-pressed="false"
+    >
+      Office Manager
+    </button>
+  </div>
+  <div id="projects-grid" class="grid-3-col project-grid"></div>
+</section>
+
+<div
+  id="template-modal"
+  class="template-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="template-modal-title"
+  hidden
+>
+  <div class="template-modal-backdrop" data-close-modal></div>
+  <div class="template-modal-panel">
+    <button
+      class="template-modal-close"
+      type="button"
+      aria-label="Close preview"
+      data-close-modal
+    >
+      ×
+    </button>
+    <div id="template-preview"></div>
+  </div>
+</div>

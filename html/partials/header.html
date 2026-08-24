@@ -1,0 +1,56 @@
+<header class="site-header" role="banner">
+  <div class="nav-container">
+    <a href="#home" class="logo" aria-label="DevEngine Home">
+      <span class="logo-accent">Dev</span>Engine<span class="logo-dot">.</span>
+    </a>
+
+    <button
+      id="mobile-menu-toggle"
+      class="mobile-menu-btn"
+      aria-label="Toggle Navigation Menu"
+      aria-expanded="false"
+      aria-controls="primary-navigation"
+    >
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+
+    <nav
+      id="primary-navigation"
+      class="site-nav"
+      role="navigation"
+      aria-label="Main Navigation"
+    >
+      <ul class="nav-list">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#projects" class="nav-link">Templates</a></li>
+        <li data-auth-only hidden>
+          <a href="#my-portfolios" class="nav-link">Your Portfolios</a>
+        </li>
+        <li><a href="#contact" class="nav-link">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="#builder" class="btn btn-glow-nav">Build Your Own Portfolio</a>
+      <span id="auth-user-email" class="auth-user-email" hidden></span>
+      <button
+        id="auth-action-btn"
+        class="btn btn-glow-nav auth-action-btn"
+        type="button"
+        data-auth-state="logged-out"
+      >
+        <span class="auth-action-icon" aria-hidden="true">↪</span>
+        <span class="auth-action-label">Login</span>
+      </button>
+      <button
+        id="theme-toggle"
+        class="theme-btn"
+        aria-label="Toggle color theme"
+      >
+        <span id="theme-icon" aria-hidden="true">🌙</span>
+      </button>
+    </div>
+  </div>
+</header>
